@@ -1,9 +1,9 @@
 <?php
 
-class HomeController extends Controller {
+class ErrorController extends Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->view->render('home');
+        $this->view->render('error');
     }
 }

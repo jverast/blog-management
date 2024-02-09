@@ -16,8 +16,8 @@ final class App {
         $path = 'controllers/' . $this->url[0] . '.controller.php';
 
         if (!is_file($path)) {
-            echo 'Not found';
-            exit;
+            require_once 'controllers/error.controller.php';
+            $controller = new ErrorController();
         } else {
             require_once $path;
 

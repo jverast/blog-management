@@ -1,7 +1,10 @@
 <?php
 
 class Controller {
+    public $view;
+    public $model;
+
     public function __construct() {
-        echo '<p>controller base</p>';
+        $this->view = new View();
     }
 }
