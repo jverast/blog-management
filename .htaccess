@@ -1,0 +1,15 @@
+# Apache mod_rewrite rules
+
+# A module for the Apache web server that allows for flexible 
+# and powerful URL manipulation
+
+# E.g. http://localhost/foo -> http://localhost/index.php?url=foo
+
+# The coditions are used to exclude URL rewriting for files, directories 
+# and links that actually exist on the server
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
