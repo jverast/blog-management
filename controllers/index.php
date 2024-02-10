@@ -6,6 +6,10 @@ class Controller {
 
     public function __construct() {
         $this->view = new View();
+
+        if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+            $this->logout();
+        }
     }
 
     public function load_model($name = NULL) {
@@ -27,5 +31,14 @@ class Controller {
             $model_name = ucfirst($name) . 'Model';
             $this->model = new $model_name();
         }
+    }
+
+    public function logout() {
+        session_status() !== PHP_SESSION_ACTIVE && session_start();
+
+        session_unset();
+        session_destroy();
+
+        header('location: ' . ROOT_URL);
     }
 }

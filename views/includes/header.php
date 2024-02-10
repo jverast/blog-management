@@ -15,9 +15,28 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
-                <li>
+                <?php if (isset($_SESSION['logged_in'])) { ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            User's Panel
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">User settings</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) { ?>
+                                <li><a class="dropdown-item" href="<?= ROOT_URL ?>/administration">Administration</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            <?php } ?>
+                            <li><a class="dropdown-item text-danger fw-bold" href="?action=logout">Log out</a></li>
+                        </ul>
+                    </li>
+                <?php } else { ?>
                     <a class="nav-link" href="<?= ROOT_URL . 'auth?d=login' ?>">Login</a>
-                </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
