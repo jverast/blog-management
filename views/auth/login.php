@@ -1,4 +1,4 @@
-<form action="<?= ROOT_URL ?>/auth/login" method="post">
+<form action="<?= ROOT_URL ?>auth/login" method="post">
     <div class="mb-3">
         <label for="inputEmail" class="form-label">Email address</label>
         <input type="email" class="form-control" id="inputEmail" name="email" required>

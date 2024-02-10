@@ -1,11 +1,33 @@
 <?php
 
 class Model {
-    private $db;
-    private $result;
+    protected $db;
+    protected $result;
 
     public function __construct() {
         $this->db = new Database();
+    }
+
+    public function select($email) {
+        try {
+            $stmt = $this->db->connection()->prepare('SELECT * FROM users WHERE email = :email');
+            $stmt->execute(['email' => $email]);
+
+            if (!$stmt) {
+                return $this->result = [
+                    'error' => true,
+                    'message' => 'user not found'
+                ];
+            }
+
+            $user = $stmt->fetch();
+            return $this->result = [
+                'error' => false,
+                'data' => $user
+            ];
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
     }
 
     public function insert($data) {
