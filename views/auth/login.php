@@ -8,5 +8,5 @@
         <input type="password" class="form-control" id="inputPassword" name="password" required>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <div class="mt-3">Don't have an account? <a href="<?= ROOT_URL ?>auth/register">Register One!</a></div>
+    <div class="mt-3">Don't have an account? <a href="<?= ROOT_URL ?>auth?d=register">Register One!</a></div>
 </form>

@@ -17,7 +17,9 @@
             <div class="card mt-2 mb-4">
                 <div class="card-body">
                     <h4 class="card-title mb-3"><?= $this->display == 'login' ? 'Login' : 'Register' ?></h4>
+
                     <?php require_once 'views/includes/alert.php' ?>
+
                     <!-- LOGIN / REGISTRATION -->
                     <?php
                     if ($this->display === 'login') {

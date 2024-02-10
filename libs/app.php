@@ -1,9 +1,13 @@
 <?php
 
+require_once 'controllers/error.controller.php';
+
 final class App {
     private $url;
 
     public function __construct() {
+        if (empty($_SESSION)) session_start();
+
         $this->url = $_GET['url'] ?? NULL;
 
         if (empty($this->url)) {
@@ -16,7 +20,6 @@ final class App {
         $path = 'controllers/' . $this->url[0] . '.controller.php';
 
         if (!is_file($path)) {
-            require_once 'controllers/error.controller.php';
             $controller = new ErrorController();
         } else {
             require_once $path;

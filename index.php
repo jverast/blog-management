@@ -7,6 +7,7 @@ include_once 'models/index.php';
 include_once 'views/index.php';
 
 include_once 'libs/app.php';
+include_once 'libs/database.php';
 
 $app = new App();
 

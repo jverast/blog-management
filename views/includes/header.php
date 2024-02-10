@@ -16,7 +16,7 @@
                     <a class="nav-link" href="#">Contact</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="<?= ROOT_URL . 'auth/login' ?>">Login</a>
+                    <a class="nav-link" href="<?= ROOT_URL . 'auth?d=login' ?>">Login</a>
                 </li>
             </ul>
         </div>
