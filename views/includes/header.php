@@ -21,12 +21,13 @@
                             User's Panel
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">User settings</a></li>
+                            <li><a class="dropdown-item" href="dashboard?d=settings">User settings</a></li>
+                            <li><a class="dropdown-item" href="dashboard?d=new-blog">New Blog +</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) { ?>
-                                <li><a class="dropdown-item" href="<?= ROOT_URL ?>/administration">Administration</a></li>
+                                <li><a class="dropdown-item" href="dashboard?d=admin">Administration</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

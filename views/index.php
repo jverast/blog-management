@@ -2,6 +2,7 @@
 
 class View {
     public $alert;
+    public $title;
     public $display;
 
     public function __construct() {

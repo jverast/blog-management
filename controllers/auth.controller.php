@@ -17,11 +17,7 @@ class AuthController extends Controller {
                     $this->view->render('auth');
                     break;
                 default:
-                    $error_controller = new ErrorController();
-                    $error_controller->details = [
-                        'code' => 404,
-                        'error_message' => 'Page Not found'
-                    ];
+                    header('location: ' . ROOT_URL);
             }
         }
     }
@@ -38,8 +34,8 @@ class AuthController extends Controller {
             $this->view->display = 'register';
             $this->view->render('auth');
         } else {
-            $this->load_model();
-            $result = $this->model->insert($data);
+            $this->load_model('auth');
+            $result = $this->model->insert_user($data);
 
             if ($result['error']) {
                 $this->view->alert = [
@@ -47,7 +43,11 @@ class AuthController extends Controller {
                     'variant' => 'danger'
                 ];
             } else {
+                $user = $this->model->select_user($data['email']);
+
                 $_SESSION['email'] = $data['email'];
+                $_SESSION['user_id'] = $user['data']['user_id'];
+                $_SESSION['is_admin'] = $user['data']['is_admin'] ? true : false;
                 $_SESSION['logged_in'] = true;
 
                 header('location: ' . ROOT_URL);
@@ -62,9 +62,10 @@ class AuthController extends Controller {
         $authenticated = $this->authenticate($auth);
 
         if ($authenticated) {
-            $user = $this->model->select($auth['email']);
+            $user = $this->model->select_user($auth['email']);
 
             $_SESSION['email'] = $auth['email'];
+            $_SESSION['user_id'] = $user['data']['user_id'];
             $_SESSION['is_admin'] = $user['data']['is_admin'] ? true : false;
             $_SESSION['logged_in'] = true;
 
