@@ -22,10 +22,16 @@
 
                     <!-- USER-SETTINGS / DASHBOARD -->
                     <?php
-                    if ($this->display === 'login') {
-                        require_once 'views/dashboard/setttings.php';
-                    } else {
-                        require_once 'views/dashboard/new-blog.php';
+                    switch ($this->display) {
+                        case 'settings':
+                            require_once 'views/dashboard/settings.php';
+                            break;
+                        case 'new-blog':
+                            require_once 'views/dashboard/new-blog.php';
+                            break;
+                        case 'admin':
+                            require_once 'views/dashboard/admin.php';
+                            break;
                     }
                     ?>
 

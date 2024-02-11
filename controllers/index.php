@@ -41,4 +41,10 @@ class Controller {
 
         header('location: ' . ROOT_URL);
     }
+
+    public function readable_array($array) {
+        echo '<pre>';
+        print_r($array);
+        echo '</pre>';
+    }
 }

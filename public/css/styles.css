@@ -1,0 +1,4 @@
+.unclickable {
+  pointer-events: none;
+  color: blue important!;
+}

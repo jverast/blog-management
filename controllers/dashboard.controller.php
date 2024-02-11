@@ -25,13 +25,46 @@ class DashboardController extends Controller {
                     $this->view->render('dashboard');
                     break;
                 case 'admin':
-                    $this->view->display = 'admin';
-                    $this->view->title = 'User Management';
-                    $this->view->render('dashboard');
-                    break;
+                    if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
+                        isset($_GET['r']) && $this->delete_user($_GET['r']);
+                        $this->obtain_user_list();
+
+                        $this->view->display = 'admin';
+                        $this->view->title = 'User Management';
+                        $this->view->render('dashboard');
+                        break;
+                    }
                 default:
                     header('location: ' . ROOT_URL);
             }
+        }
+    }
+
+    public function obtain_user_list() {
+        $this->load_model('dashboard');
+        $result = $this->model->select_all_users();
+
+        if (!$result) {
+            echo 'ERROR: ' . $result['message'];
+        } else {
+            $this->view->data['users'] = $result['data'];
+        }
+    }
+
+    public function delete_user($user_id) {
+        $this->load_model('dashboard');
+        $result = $this->model->drop_user($user_id);
+
+        if (!$result) {
+            $this->view->alert = [
+                'message' => 'ERROR: ' . $result['message'],
+                'variant' => 'danger'
+            ];
+        } else {
+            $this->view->alert = [
+                'message' => $result['message'],
+                'variant' => 'success'
+            ];
         }
     }
 
@@ -42,24 +75,27 @@ class DashboardController extends Controller {
         $validation = $this->validate_img($file);
 
         if ($validation['error']) {
-            echo $validation['message'];
+            $this->view->alert = [
+                'message' => $validation['message'] . ': Blog could not be added',
+                'variant' => 'danger'
+            ];
         } else {
             if (is_uploaded_file($file['tmp_name'])) {
-                $this->load_model('auth');
-                $user = $this->model->select_user($_SESSION['email']);
+                $path = 'public/assets/images/';
+                $file_name = $this->build_file_name($file, $path);
 
                 $blog = [
                     'title' => $input_values['blog_title'],
                     'content' => $input_values['blog_content'],
-                    'thumbnail_url' => $file['name'],
-                    'user_id' => $user['data']['user_id']
+                    'thumbnail_url' => $file_name,
+                    'user_id' => $_SESSION['user_id']
                 ];
 
                 $this->load_model('dashboard');
                 $result = $this->model->insert_blog($blog);
 
                 if ($result) {
-                    $this->store_image_file($file);
+                    move_uploaded_file($file['tmp_name'], $path . $file_name);
                     $this->view->alert = [
                         'message' => 'Blog was successfully added',
                         'variant' => 'success'
@@ -71,14 +107,12 @@ class DashboardController extends Controller {
                     ];
                 }
             } else {
-                echo 'temp file does not exists';
+                echo 'TEMP_FILE_DOESNT_EXIST';
             }
         }
     }
 
-    private function store_image_file($file) {
-        $path = 'public/assets/images/';
-
+    private function build_file_name($file, $path) {
         if (!is_dir($path)) mkdir($path, 0777, true);
 
         $file_ext = explode('.', $file['name']);
@@ -86,8 +120,7 @@ class DashboardController extends Controller {
 
         $file_name = uniqid();
         $file_name = $file_name . '.' . $file_ext;
-
-        move_uploaded_file($file['tmp_name'], $path . $file_name);
+        return $file_name;
     }
 
     private function validate_img($img_data) {

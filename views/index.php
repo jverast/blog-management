@@ -4,6 +4,7 @@ class View {
     public $alert;
     public $title;
     public $display;
+    public $data;
 
     public function __construct() {
         // ...
