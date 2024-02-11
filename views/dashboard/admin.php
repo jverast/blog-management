@@ -11,8 +11,6 @@
         </thead>
         <tbody>
             <?php
-            // ob_start();
-
             foreach ($this->data['users'] as $user) { ?>
                 <tr>
                     <td class="text-center"><?= $user['user_id'] ?></td>
@@ -32,8 +30,6 @@
                     </td>
                 </tr>
             <?php }
-
-            // ob_flush();
             ?>
         </tbody>
     </table>

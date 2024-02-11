@@ -20,7 +20,7 @@
 
                     <?php require_once 'views/includes/alert.php' ?>
 
-                    <!-- USER-SETTINGS / DASHBOARD -->
+                    <!-- USER SETTINGS | NEW BLOG | USER MANAGEMENT ( -->
                     <?php
                     switch ($this->display) {
                         case 'settings':

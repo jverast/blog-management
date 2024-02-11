@@ -86,7 +86,7 @@ class DashboardController extends Controller {
 
                 $blog = [
                     'title' => $input_values['blog_title'],
-                    'content' => $input_values['blog_content'],
+                    'excerpt' => $input_values['blog_excerpt'],
                     'thumbnail_url' => $file_name,
                     'user_id' => $_SESSION['user_id']
                 ];

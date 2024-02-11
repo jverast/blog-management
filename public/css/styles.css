@@ -2,3 +2,14 @@
   pointer-events: none;
   color: blue important!;
 }
+
+.card {
+  .card-img-top {
+    height: 175px;
+    object-fit: cover;
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+  }
+}
