@@ -83,11 +83,9 @@ class DashboardModel extends Model {
                 ]
             );
 
-            $this->result = ['error' => false, 'message' => null];
+            return $this->result = ['error' => false, 'message' => null];
         } catch (PDOException $e) {
-            $this->result = ['error' => true, 'message' => $e->getMessage()];
+            return $this->result = ['error' => true, 'message' => $e->getMessage()];
         }
-
-        return $this->result;
     }
 }

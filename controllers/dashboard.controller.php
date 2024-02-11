@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * FEATURE TO BE ADDED
+ * - NEW-BLOG
+ *   - Add tags field
+ *   - Generate excerpt from content
+ * - USER MANAGEMENT
+ *   - Assign roles
+ */
+
 class DashboardController extends Controller {
     public function __construct() {
         parent::__construct();
@@ -72,7 +81,7 @@ class DashboardController extends Controller {
         $input_values = $_POST;
         $file = $_FILES['blog_thumbnail'];
 
-        $validation = $this->validate_img($file);
+        $validation = $this->validate_file($file);
 
         if ($validation['error']) {
             $this->view->alert = [
@@ -94,20 +103,20 @@ class DashboardController extends Controller {
                 $this->load_model('dashboard');
                 $result = $this->model->insert_blog($blog);
 
-                if ($result) {
+                if ($result['error']) {
+                    $this->view->alert = [
+                        'message' => 'Blog could not be added',
+                        'variant' => 'danger'
+                    ];
+                } else {
                     move_uploaded_file($file['tmp_name'], $path . $file_name);
                     $this->view->alert = [
                         'message' => 'Blog was successfully added',
                         'variant' => 'success'
                     ];
-                } else {
-                    $this->view->alert = [
-                        'message' => 'Blog could not be added',
-                        'variant' => 'danger'
-                    ];
                 }
             } else {
-                echo 'TEMP_FILE_DOESNT_EXIST';
+                echo 'NO_TEMP_FILE_EXISTS';
             }
         }
     }
@@ -123,7 +132,7 @@ class DashboardController extends Controller {
         return $file_name;
     }
 
-    private function validate_img($img_data) {
+    private function validate_file($img_data) {
         $validate = ['error' => true];
 
         if ($img_data['error'] === 4) {
