@@ -5,7 +5,6 @@ class HomeController extends Controller {
         parent::__construct();
 
         $this->obtain_post_list();
-        $this->view->render('home');
     }
 
     public function obtain_post_list() {
@@ -16,6 +15,7 @@ class HomeController extends Controller {
             echo $result['message'];
         } else {
             $this->view->data['blogs'] = $result['data'];
+            $this->view->render('home');
         }
     }
 }
