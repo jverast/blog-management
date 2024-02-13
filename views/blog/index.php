@@ -15,11 +15,11 @@
     <div class="d-flex flex-column vh-100">
         <?php require_once 'views/includes/header.php' ?>
         <div class="container flex-grow-1">
-            <div class="card mt-2 mb-4">
+            <div class="card mt-2 mb-4 blog">
                 <div class="card-body">
                     <h4 class="card-title mb-3 text-center fs-2"><?= $this->data['blog']['title'] ?></h4>
                     <?php require_once 'views/includes/alert.php' ?>
-                    <img class="d-block mx-auto img-fluid mb-3" src="public/assets/images/<?= $this->data['blog']['thumbnail_url'] ?>">
+                    <img class="d-block mx-auto img-fluid mb-3 blog-img" src="public/assets/images/<?= $this->data['blog']['thumbnail_url'] ?>">
                     <div class="mb-3">
                         <i class="bi bi-calendar me-2"></i> <span class="fst-italic opacity-75"><?= $this->data['blog']['created_at'] ?></span>
                     </div>

@@ -27,6 +27,7 @@
                     </div>
                 <?php }
                 ?>
+                <?php require_once 'views/home/pagination.php' ?>
             </div>
         </div>
         <?php require_once 'views/includes/footer.php' ?>
