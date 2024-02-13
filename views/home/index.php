@@ -17,7 +17,7 @@
             <div class="row row-gap-4">
                 <?php foreach ($this->data['blogs'] as $blog) { ?>
                     <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="card blog-thumb">
+                        <div class="card blog-thumb border-0">
                             <img class="card-img-top blog-thumb-img-top" src="<?= 'public/assets/images/' . $blog['thumbnail_url'] ?>" alt="Title" />
                             <div class="card-body">
                                 <h4 class="card-title blog-thumb-title"><a class="blog-thumb-title-link" href="<?= ROOT_URL . 'blog?id=' . $blog['blog_id'] ?>"><?= strlen($blog['title']) > 50 ? substr($blog['title'], 0, 50) . ' ...' : $blog['title'] ?></a></h4>

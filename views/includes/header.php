@@ -1,11 +1,13 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container">
-        <a class="navbar-brand" href="<?= ROOT_URL ?>">My App</a>
+        <div class="d-flex flex-direction-row align-items-center">
+            <a class="navbar-brand" href="<?= ROOT_URL ?>">My App</a>
+            <?php include_once 'theme-toggle.php' ?>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-            <?php include_once 'theme-toggle.php' ?>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="<?= ROOT_URL ?>">Home</a>
