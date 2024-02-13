@@ -41,12 +41,11 @@ class HomeController extends Controller {
         if ($result['error']) {
             echo $result['message'];
         } else {
-            // $this->readable_array($result['data']);
-            // exit;
-
-            $this->view->data['blogs'] = $result['data'];
-            $this->view->data['pages'] = $pages;
-            $this->view->data['current_page'] = $this->current_page;
+            $this->view->data = [
+                'blogs' => $result['data'],
+                'pages' => $pages,
+                'current_page' => $this->current_page
+            ];
 
             $this->view->render('home');
         }
