@@ -7,13 +7,31 @@ class HomeController extends Controller {
     public function __construct() {
         parent::__construct();
 
-        if (!isset($_GET['page'])) {
-            $this->current_page = 1;
+        if (isset($_GET['search'])) {
+            $this->search_blogs();
         } else {
-            $this->current_page = $_GET['page'];
+            if (!isset($_GET['page'])) {
+                $this->current_page = 1;
+            } else {
+                $this->current_page = $_GET['page'];
+            }
+            $this->obtain_blogs_list_by_page();
         }
+    }
 
-        $this->obtain_blogs_list_by_page();
+    public function search_blogs() {
+        $keyword = $_GET['search'];
+
+        $this->load_model('home');
+        $result = $this->model->search_from_blogs($keyword);
+
+        if ($result['error']) {
+            echo $result['message'];
+        } else {
+            $this->view->data['blogs'] = $result['data'];
+            $this->view->display = 'search';
+            $this->view->render('home');
+        }
     }
 
     public function obtain_blog_list() {

@@ -5,6 +5,30 @@ class HomeModel extends Model {
         parent::__construct();
     }
 
+    public function search_from_blogs($keyword) {
+        try {
+            $stmt = $this->db->connection()->prepare('SELECT * FROM blogs WHERE title LIKE :keyword');
+            $stmt->execute(['keyword' => '%' . $keyword . '%']);
+
+            if ($stmt->rowCount() === 0) {
+                throw new Exception('No blogs found');
+            }
+
+            $blogs = $stmt->fetchAll();
+            return $this->result = [
+                'error' => false,
+                'data' => $blogs
+            ];
+        } catch (Exception $e) {
+            return $this->result = [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+        } catch (PDOException $e) {
+            $e->getMessage();
+        }
+    }
+
     public function count_blogs() {
         try {
             $stmt = $this->db->connection()->prepare('SELECT * FROM blogs');

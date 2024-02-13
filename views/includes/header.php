@@ -7,7 +7,12 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+            <div class="offset"></div>
+            <form class="d-flex search-form" role="search" method="get" action="">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="<?= ROOT_URL ?>">Home</a>
