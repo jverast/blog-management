@@ -26,12 +26,16 @@ class HomeController extends Controller {
         $result = $this->model->search_from_blogs($keyword);
 
         if ($result['error']) {
-            echo $result['message'];
+            $this->view->alert = [
+                'message' => $result['message'],
+                'variant' => 'danger'
+            ];
         } else {
             $this->view->data['blogs'] = $result['data'];
             $this->view->display = 'search';
-            $this->view->render('home');
         }
+
+        $this->view->render('home');
     }
 
     public function obtain_blog_list() {
@@ -39,11 +43,15 @@ class HomeController extends Controller {
         $result = $this->model->select_all_blogs();
 
         if ($result['error']) {
-            echo $result['message'];
+            $this->view->alert = [
+                'message' => $result['message'],
+                'variant' => 'danger'
+            ];
         } else {
             $this->view->data['blogs'] = $result['data'];
-            $this->view->render('home');
         }
+
+        $this->view->render('home');
     }
 
     public function obtain_blogs_list_by_page() {
@@ -57,15 +65,18 @@ class HomeController extends Controller {
         $result = $this->model->select_blogs_by_page($this->blogs_per_page, $offset);
 
         if ($result['error']) {
-            echo $result['message'];
+            $this->view->alert = [
+                'message' => $result['message'],
+                'variant' => 'danger'
+            ];
         } else {
             $this->view->data = [
                 'blogs' => $result['data'],
                 'pages' => $pages,
                 'current_page' => $this->current_page
             ];
-
-            $this->view->render('home');
         }
+
+        $this->view->render('home');
     }
 }

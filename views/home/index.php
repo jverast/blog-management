@@ -13,21 +13,23 @@
     <div class="d-flex flex-column vh-100">
         <?php require_once 'views/includes/header.php' ?>
         <div class="container flex-grow-1 mb-3">
-            <h1 class="foo">Blogs</h1>
-            <div class="row row-gap-4">
-                <?php foreach ($this->data['blogs'] as $blog) { ?>
+            <!-- <h1 class="mb-3">Blogs</h1> -->
+            <?php require_once 'views/includes/alert.php' ?>
+            <div class="row row-gap-4 mt-3">
+                <?php
+                if (isset($this->data['blogs'])) foreach ($this->data['blogs'] as $blog) { ?>
                     <div class="col-12 col-sm-6 col-lg-4">
                         <div class="card blog-thumb border-0">
                             <img class="card-img-top blog-thumb-img-top" src="<?= 'public/assets/images/' . $blog['thumbnail_url'] ?>" alt="Title" />
                             <div class="card-body">
                                 <h4 class="card-title blog-thumb-title"><a class="blog-thumb-title-link" href="<?= ROOT_URL . 'blog?id=' . $blog['blog_id'] ?>"><?= strlen($blog['title']) > 50 ? substr($blog['title'], 0, 50) . ' ...' : $blog['title'] ?></a></h4>
-                                <p class="card-text"><?= substr($blog['excerpt'], 0, 175) . ' ...' ?></p>
+                                <p class="card-text"><?= substr(preg_replace("/\n|\r/", "", $blog['excerpt']), 0, 175) . ' ...' ?></p>
                             </div>
                         </div>
                     </div>
                 <?php }
                 ?>
-                <?php if ($this->display !== 'search') {
+                <?php if (isset($this->data['blogs']) && $this->display !== 'search') {
                     require_once 'views/home/pagination.php';
                 } ?>
             </div>

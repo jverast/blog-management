@@ -8,8 +8,8 @@
         <input type="file" class="form-control" id="inputThumbnail" name="blog_thumbnail" accept=".jpg, .jpeg, .png" required>
     </div>
     <div class="mb-3">
-        <label for="inputExcerpt" class="form-label">Excerpt</label>
-        <textarea class="form-control" id="inputExcerpt" rows="5" name="blog_excerpt" required></textarea>
+        <label for="inputContent" class="form-label">Content</label>
+        <textarea class="form-control" id="inputContent" rows="5" name="blog_content" required></textarea>
     </div>
     <button type="submit" class="btn btn-primary" name="blog_submit">Submit</button>
 </form>

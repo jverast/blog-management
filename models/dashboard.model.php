@@ -72,12 +72,13 @@ class DashboardModel extends Model {
 
     public function insert_blog($blog) {
         try {
-            $stmt = $this->db->connection()->prepare('INSERT INTO blogs (title, excerpt, thumbnail_url, user_id) VALUES(:title, :excerpt, :thumbnail_url, :user_id)');
+            $stmt = $this->db->connection()->prepare('INSERT INTO blogs (title, excerpt, content, thumbnail_url, user_id) VALUES(:title, :excerpt, :content, :thumbnail_url, :user_id)');
 
             $stmt->execute(
                 [
                     'title' => $blog['title'],
                     'excerpt' => $blog['excerpt'],
+                    'content' => $blog['content'],
                     'thumbnail_url' => $blog['thumbnail_url'],
                     'user_id' => $blog['user_id']
                 ]

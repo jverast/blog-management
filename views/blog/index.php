@@ -23,7 +23,7 @@
                     <div class="mb-3">
                         <i class="bi bi-calendar me-2"></i> <span class="fst-italic opacity-75"><?= $this->data['blog']['created_at'] ?></span>
                     </div>
-                    <p><?= $this->data['blog']['excerpt'] ?></p>
+                    <p> <?= $this->data['blog']['content'] ?></p>
                     <div class="d-flex justify-content-end">
                         <i class="bi bi-person-circle me-2" style="margin-top: 1px"></i> <span class="fst-italic opacity-75"><?= $this->data['blog']['first_name'] . ' ' . $this->data['blog']['last_name'] ?></span>
                     </div>

@@ -77,8 +77,51 @@ class DashboardController extends Controller {
         }
     }
 
+    // public function create_new_blog() {
+    //     $input_values = $_POST;
+    //     $file = $_FILES['blog_thumbnail'];
+
+    //     $validation = $this->validate_file($file);
+
+    //     if ($validation['error']) {
+    //         $this->view->alert = [
+    //             'message' => $validation['message'] . ': Blog could not be added',
+    //             'variant' => 'danger'
+    //         ];
+    //     } else {
+    //         if (is_uploaded_file($file['tmp_name'])) {
+    //             $path = 'public/assets/images/';
+    //             $file_name = $this->build_file_name($file, $path);
+
+    //             $blog = [
+    //                 'title' => $input_values['blog_title'],
+    //                 'excerpt' => $input_values['blog_excerpt'],
+    //                 'thumbnail_url' => $file_name,
+    //                 'user_id' => $_SESSION['user_id']
+    //             ];
+
+    //             $this->load_model('dashboard');
+    //             $result = $this->model->insert_blog($blog);
+
+    //             if ($result['error']) {
+    //                 $this->view->alert = [
+    //                     'message' => 'Blog could not be added',
+    //                     'variant' => 'danger'
+    //                 ];
+    //             } else {
+    //                 move_uploaded_file($file['tmp_name'], $path . $file_name);
+    //                 $this->view->alert = [
+    //                     'message' => 'Blog was successfully added',
+    //                     'variant' => 'success'
+    //                 ];
+    //             }
+    //         } else {
+    //             echo 'NO_TEMP_FILE_EXISTS';
+    //         }
+    //     }
+    // }
+
     public function create_new_blog() {
-        $input_values = $_POST;
         $file = $_FILES['blog_thumbnail'];
 
         $validation = $this->validate_file($file);
@@ -90,15 +133,17 @@ class DashboardController extends Controller {
             ];
         } else {
             if (is_uploaded_file($file['tmp_name'])) {
-                $path = 'public/assets/images/';
-                $file_name = $this->build_file_name($file, $path);
-
+                $file_name = $this->build_file_name($file);
                 $blog = [
-                    'title' => $input_values['blog_title'],
-                    'excerpt' => $input_values['blog_excerpt'],
+                    'title' => $_POST['blog_title'],
+                    'content' => str_replace('\n', '', $_POST['blog_content']),
+                    'excerpt' => $this->build_excerpt($_POST['blog_content']),
                     'thumbnail_url' => $file_name,
                     'user_id' => $_SESSION['user_id']
                 ];
+
+                // $this->readable_array($blog);
+                // exit;
 
                 $this->load_model('dashboard');
                 $result = $this->model->insert_blog($blog);
@@ -109,6 +154,8 @@ class DashboardController extends Controller {
                         'variant' => 'danger'
                     ];
                 } else {
+                    $path = 'public/assets/images/';
+                    !is_dir($path) && mkdir($path, 0777, true);
                     move_uploaded_file($file['tmp_name'], $path . $file_name);
                     $this->view->alert = [
                         'message' => 'Blog was successfully added',
@@ -116,14 +163,22 @@ class DashboardController extends Controller {
                     ];
                 }
             } else {
-                echo 'NO_TEMP_FILE_EXISTS';
+                $this->view->alert = [
+                    'message' => 'No temp file exists',
+                    'variant' => 'danger'
+                ];
             }
         }
     }
 
-    private function build_file_name($file, $path) {
-        if (!is_dir($path)) mkdir($path, 0777, true);
+    private function build_excerpt($content) {
+        $excerpt = substr($content, 0, 1024);
+        $excerpt = strip_tags(html_entity_decode($excerpt, ENT_QUOTES | ENT_HTML5));
+        $excerpt = str_replace('\n', '', $excerpt);
+        return $excerpt;
+    }
 
+    private function build_file_name($file) {
         $file_ext = explode('.', $file['name']);
         $file_ext = strtolower($file_ext[1]);
 
@@ -132,15 +187,15 @@ class DashboardController extends Controller {
         return $file_name;
     }
 
-    private function validate_file($img_data) {
+    private function validate_file($file) {
         $validate = ['error' => true];
 
-        if ($img_data['error'] === 4) {
-            $validate['message'] = 'IMAGE_ERROR';
+        if ($file['error'] === 4) {
+            $validate['message'] = 'UPLOAD_IMAGE_ERROR';
         } else {
             $image_data = [
-                'name' => $img_data['name'],
-                'size' => $img_data['size']
+                'name' => $file['name'],
+                'size' => $file['size']
             ];
 
             $image_ext = explode('.', $image_data['name']);

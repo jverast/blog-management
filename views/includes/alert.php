@@ -1,5 +1,5 @@
 <?php if (isset($this->alert)) { ?>
-    <div id="alert" class="alert alert-<?= $this->alert['variant'] ?> text-center" role="alert">
+    <div id="alert" class="alert alert-<?= $this->alert['variant'] ?> text-center mt-3" role="alert">
         <?= $this->alert['message'] ?>
     </div>
 <?php } ?>
